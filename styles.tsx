@@ -1,4 +1,4 @@
-// styles.js
+
 import { StyleSheet, Dimensions, StatusBar } from 'react-native';
 
 const windowWidth = Dimensions.get('window').width;
@@ -6,14 +6,16 @@ const windowWidth = Dimensions.get('window').width;
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#afeeee',
+    backgroundColor: 'gray',
     paddingTop: StatusBar.currentHeight,
   },
   imageContainer: {
+    flexBasis:'50%', // adjust this flex value to change the height of the hero image
     width: '100%',
-    height: '50%',
     justifyContent: 'center',
     alignItems: 'center',
+   // paddingBottom:16,
+   marginBottom:16,
   },
   overlayText: {
     position: 'absolute',
@@ -32,7 +34,6 @@ export default StyleSheet.create({
     textShadowRadius: 2
   },
   horizontalScroll: {
-    flexGrow: 0,
     flexDirection: 'row',
   },
   descriptionText: {
@@ -43,7 +44,7 @@ export default StyleSheet.create({
   },
   logoImage: {
     width: windowWidth * 0.9,
-    height: 200,
+    height: 220,
     marginHorizontal: 16,
   },
   buttonContainer: {
