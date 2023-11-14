@@ -1,21 +1,28 @@
-
 import { StyleSheet, Dimensions, StatusBar } from 'react-native';
 
-const windowWidth = Dimensions.get('window').width;
+
+const windowWidth = Dimensions.get('window').width; // Get the width of the screen
+const windowHeight = Dimensions.get('window').height; // Get the height of the screen
+
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'gray',
-    paddingTop: StatusBar.currentHeight,
+    backgroundColor: '#cce6ff',
+   paddingTop: StatusBar.currentHeight,
   },
+  // Container for the hero image
+  
   imageContainer: {
-    flexBasis:'50%', // adjust this flex value to change the height of the hero image
-    width: '100%',
+    width: windowWidth,
+    height: windowHeight * 0.5,
     justifyContent: 'center',
     alignItems: 'center',
-   // paddingBottom:16,
-   marginBottom:16,
+  },
+  fullWidthImage: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
   },
   overlayText: {
     position: 'absolute',
@@ -29,32 +36,68 @@ export default StyleSheet.create({
     color: 'yellow',
     fontSize: 34,
     textAlign: 'center',
-    textShadowColor: 'rgba(0, 0, 0, 0.9)',
-    textShadowOffset: {width: 0, height: 0},
-    textShadowRadius: 2
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 2,
   },
-  horizontalScroll: {
-    flexDirection: 'row',
+  descriptionScrollView: {
+    flex: 1, // Adjust according to your layout
+    paddingHorizontal: 5, // Add horizontal padding
+    // Add any additional styling you wish for the ScrollView
   },
+
+  headerText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#000',
+    padding: 5,
+    // Any other styling for the header text
+  },
+
   descriptionText: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: 'red',
-    paddingHorizontal: 16,
+    color: '#000',
+    padding: 5,
+    // Any other styling for the description text
   },
-  logoImage: {
-    width: windowWidth * 0.9,
-    height: 220,
-    marginHorizontal: 16,
+  
+  explanationContainer: {
+    maxHeight: 200,
   },
+  
   buttonContainer: {
-    padding: 16,
+    padding: 10,
+    alignItems: 'center',
+  },
+  gradientButton: {
+    borderRadius: 25,
+    marginBottom: 10,
+    width: '95%',
+  },
+  gradientBackground: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
+  buttonText: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  buttonSpacer: {
+    height: 2,
   },
   navBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 16,
-    borderTopWidth: 1,
-    borderColor: '#dcdcdc',
+    backgroundColor: '#f2f2f2',
+    borderTopWidth: 0,
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    shadowColor: '#000',
+    shadowOffset: { height: 0, width: 0 },
+    elevation: 5,
   },
 });

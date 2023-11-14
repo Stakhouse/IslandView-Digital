@@ -1,18 +1,17 @@
 import React from 'react';
-import { View, Text, Image, Button, ScrollView, StatusBar } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StatusBar, ScrollView } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import styles from './styles';
 import { StackNavigationProp } from '@react-navigation/stack';
-import styles from './styles'; // Ensure styles are refactored for TypeScript if needed
+type ImageSourcePropType = number | { uri: string };
 
-// Define the types for your navigation stack
+
 type HomeStackParamList = {
   Home: undefined; // Define other screens and their parameters here if needed
-  // Example: Details: { itemId: number };
 };
 
-// Define the type for the navigation prop specific to this screen
 type HomeScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'Home'>;
 
-// Define the props for the HomeScreen component
 type Props = {
   navigation: HomeScreenNavigationProp;
 };
@@ -21,42 +20,64 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const handleBenefitsPress = () => {
     // Navigation logic or other functionality
   };
+  
   const handlePackagesPress = () => {
     // Navigation logic or other functionality
   };
 
   return (
     <View style={styles.container}>
-  <StatusBar translucent backgroundColor="gold" />
-  <View style={{ ...styles.imageContainer, flex: .3,}}>
-    <Image
-      source={require('./images/IislandViewDigital.png')}
-      style={{ width: '100%', height: '100%'}}
-      resizeMode='contain'
-    />
-    <View style={styles.overlayText}>
-      <Text style={styles.text}>
-        Where Offline Views Leave a Lasting Impression
-      </Text>
-    </View>
-  </View>
-  <ScrollView
-    style={{ flex: 1 }} // Give the ScrollView a flex: 1
-    horizontal={true}
-    showsHorizontalScrollIndicator={false}
-  >
-    <Text style={styles.descriptionText}>Your Explanation Here</Text>
-    <Image
-      source={require('./images/islandviewdigitallogo1.0.png')}
-      style={styles.logoImage}
-    />
-  </ScrollView>
-  <View style={styles.buttonContainer}>
-    <Button title="Benefits of Advertising with Us" onPress={handleBenefitsPress} />
-    <Button title="See Available Packages" onPress={handlePackagesPress} />
-  </View>
-</View>
+      <StatusBar translucent backgroundColor="#004d91" />
+      <View style={styles.imageContainer}>
+        <Image
+          source={require('./images/IislandViewDigital.png')}
+          style={styles.fullWidthImage}
+        />
+        <View style={styles.overlayText}>
+          <Text style={styles.text}>
+            Where Offline Views Leave a Lasting Impression
+          </Text>
+        </View>
+      </View>
+      <ScrollView style={styles.descriptionScrollView}>
+  <Text style={styles.headerText}>
+    Maximize Your Brand's Exposure with Our Digital Taxi-Top Advertising:
+  </Text>
 
+  <Text style={styles.descriptionText}>
+    Elevate your marketing strategy with our digital taxi-top displays that offer unparalleled visibility as they navigate through the city's most populated areas. Our eye-catching displays stand out with dynamic content that engages viewers with every blink and switch, ensuring your message never goes unnoticed. The mobility of taxi-tops means your ad reaches a diverse audience, from bustling business districts to vibrant neighborhoods.
+  </Text>
+
+  <Text style={styles.descriptionText}>
+    Experience targeted advertising with the ability to choose specific routes and times, making your campaigns more effective and cost-efficient. With our innovative app, you gain the power to update your ads on the fly—allowing for real-time adjustments and the flexibility to respond to your ad's performance instantly. Go green with our digital approach that's as eco-friendly as it is impactful. Our platform also offers analytics, giving you valuable insights into your ad's performance, optimizing your return on investment. Stay ahead of the curve by adapting your message to current events or market trends with just a few taps on your device.
+  </Text>
+</ScrollView>
+
+
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={handleBenefitsPress} style={styles.gradientButton}>
+          <LinearGradient
+            colors={['#FFD700', '#FF6347', '#40E0D0', '#008000']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.gradientBackground}
+          >
+            <Text style={styles.buttonText}>Benefits of Advertising with Us</Text>
+          </LinearGradient>
+        </TouchableOpacity>
+        <View style={styles.buttonSpacer} />
+        <TouchableOpacity onPress={handlePackagesPress} style={styles.gradientButton}>
+          <LinearGradient
+            colors={['#FFD700', '#FF6347', '#40E0D0', '#008000']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.gradientBackground}
+          >
+            <Text style={styles.buttonText}>See Available Packages</Text>
+          </LinearGradient>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };
 
