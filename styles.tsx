@@ -1,29 +1,32 @@
+
 import { StyleSheet, Dimensions, StatusBar } from 'react-native';
 
-
-const windowWidth = Dimensions.get('window').width; // Get the width of the screen
-const windowHeight = Dimensions.get('window').height; // Get the height of the screen
-
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+const statusBarHeight = StatusBar.currentHeight ?? 0; // Fallback to 0 if undefined
+const navBarHeight = 50; // Assuming the navigation bar is 50px high, adjust as needed
+const usableHeight = windowHeight - statusBarHeight - navBarHeight;
 
 export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#cce6ff',
-   paddingTop: StatusBar.currentHeight,
+    // Remove or adjust paddingTop if it's creating extra space
   },
-  // Container for the hero image
-  
   imageContainer: {
     width: windowWidth,
-    height: windowHeight * 0.5,
+    // Adjust the height value to fill the space above the nav bar
+    // You might want to tweak this value to get the desired result
+    height: usableHeight * 0.62,
     justifyContent: 'center',
     alignItems: 'center',
   },
   fullWidthImage: {
     width: '100%',
     height: '100%',
-    resizeMode: 'cover',
+    resizeMode: 'contain', // You're using 'stretch' to fit the image
   },
+
   overlayText: {
     position: 'absolute',
     width: '100%',
@@ -34,11 +37,12 @@ export default StyleSheet.create({
   text: {
     fontFamily: 'DancingScript-Regular',
     color: 'yellow',
-    fontSize: 34,
+    fontSize: 25,
     textAlign: 'center',
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 2,
+    textShadowColor: 'rgba(1, 2, 0, 0.75)',
+    textShadowOffset: { width: 0.5, height: 0.5 },
+    textShadowRadius: 4,
+    fontWeight:'bold',
   },
   descriptionScrollView: {
     flex: 1, // Adjust according to your layout
@@ -66,7 +70,7 @@ export default StyleSheet.create({
   },
   
   buttonContainer: {
-    padding: 10,
+    padding: 8,
     alignItems: 'center',
   },
   gradientButton: {
