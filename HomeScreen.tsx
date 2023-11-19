@@ -3,14 +3,18 @@ import { View, Text, Image, TouchableOpacity, StatusBar, ScrollView } from 'reac
 import { LinearGradient } from 'expo-linear-gradient';
 import styles from './styles';
 import { StackNavigationProp } from '@react-navigation/stack';
+
 type ImageSourcePropType = number | { uri: string };
 
-
 type HomeStackParamList = {
-  Home: undefined; // Define other screens and their parameters here if needed
+  HomeStackScreen: undefined;
+  HelpStackScreen: undefined;
+  ProfileStackScreen: undefined;
+  MenuStackScreen: undefined;
+  BenefitsScreen: undefined; // Make sure this matches the screen name in StackNavigator
 };
 
-type HomeScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'Home'>;
+type HomeScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'HomeStackScreen'>;
 
 type Props = {
   navigation: HomeScreenNavigationProp;
@@ -18,9 +22,9 @@ type Props = {
 
 const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const handleBenefitsPress = () => {
-    // Navigation logic or other functionality
+    navigation.navigate('BenefitsScreen');
   };
-  
+
   const handlePackagesPress = () => {
     // Navigation logic or other functionality
   };
