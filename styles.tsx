@@ -3,16 +3,14 @@ import { StyleSheet, Dimensions, StatusBar } from 'react-native';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const statusBarHeight = StatusBar.currentHeight ?? 0;
-const navBarHeight = 50; // Assuming the navigation bar is 50px high, adjust as needed
+const navBarHeight = 50; // Assuming the navigation bar is 50px high
 const usableHeight = windowHeight - statusBarHeight - navBarHeight;
 
 export default StyleSheet.create({
-  // Styles for HomeScreen
   container: {
     flex: 1,
-    backgroundColor: '#cce6ff', // Color for the HomeScreen container
+    backgroundColor: '#cce6ff',
   },
-  // Styles used in HomeScreen (keep these styles as they were)
   imageContainer: {
     width: windowWidth,
     height: usableHeight * 0.62,
@@ -31,7 +29,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  text: { // This style seems to be used for HomeScreen, so keep the color as is
+  text: {
     fontFamily: 'DancingScript-Regular',
     color: 'yellow',
     fontSize: 25,
@@ -48,12 +46,12 @@ export default StyleSheet.create({
   headerText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#000',
+    color: 'black',
     padding: 5,
   },
   descriptionText: {
     fontSize: 18,
-    color: '#000',
+    color: 'black',
     padding: 3,
   },
   explanationContainer: {
@@ -88,12 +86,9 @@ export default StyleSheet.create({
     shadowOffset: { height: 0, width: 0 },
     elevation: 5,
   },
-
-  // Styles specific to BenefitsScreen
   benefitsContainer: {
     flex: 1,
     backgroundColor: 'transparent',
-    
   },
   benefitsBackground: {
     flex: 1,
@@ -109,30 +104,28 @@ export default StyleSheet.create({
     marginTop: 20,
     marginBottom: 10,
     textAlign: 'center',
-    color: '#ffffff', // White color for text
+    color: '#ffffff',
   },
   benefitsPoint: {
     fontSize: 25,
     marginTop: 10,
     marginBottom: 10,
     lineHeight: 25,
-    color: '#ffffff', // White color for text
+    color: '#ffffff',
   },
   lastPoint: {
-    // Add styles similar to your 'point' style but with additional bottom margin
     fontSize: 25,
     marginTop: 10,
-    marginBottom: 60, // Adjust this value as needed to ensure it's visible above the button container
+    marginBottom: 60,
     lineHeight: 25,
-    color: '#ffffff', // Assuming white text for BenefitsScreen
-    // Include any other properties you have in your 'point' style
+    color: '#ffffff',
   },
   benefitsButtonContainer: {
     padding: 8,
     alignItems: 'center',
   },
   benefitsButton: {
-    backgroundColor: 'rgba(255, 255, 255, 0.3)', // Semi-transparent button
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
     borderColor: 'white',
     borderWidth: 1,
     borderRadius: 5,
@@ -140,14 +133,13 @@ export default StyleSheet.create({
     paddingHorizontal: 25,
   },
   benefitsButtonText: {
-    color: '#ffffff', // White color for text
+    color: '#ffffff',
     textAlign: 'center',
     fontSize: 20,
     fontWeight: 'bold',
-    
   },
   buttonText: {
-    color: 'white', // or any color you prefer
+    color: 'white',
     textAlign: 'center',
     fontSize: 16,
     fontWeight: 'bold',
@@ -165,16 +157,32 @@ export default StyleSheet.create({
     margin: 10,
     // Add other styling properties as needed
   },
-  detailedInfoHeader: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
+  infoParagraph: {
+    fontSize: 20,
     margin: 10,
+    color: '#ffffff', // Assuming white text
     // Add other styling properties as needed
   },
-  detailedInfoText: {
+  infoHeader: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#ffffff', // Assuming white text for headers
+    // Add other styling properties as needed
+  },
+  mainHeader: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#ffffff', // Choose a suitable color
+    textAlign: 'center',
+    marginBottom: 20,
+    marginTop:20, // Space before the next content
+    // Other styles...
+  },
+  callToAction: {
     fontSize: 16,
+    fontWeight: 'bold',
     margin: 10,
+    color: '#ffffff', // Assuming white text for call to action
     // Add other styling properties as needed
   },
   detailedInfoButtonContainer: {
@@ -183,8 +191,10 @@ export default StyleSheet.create({
     // Add other styling properties as needed
   },
   detailedInfoButton: {
-    backgroundColor: '#007bff', // Example color
+    backgroundColor: 'rgba(255, 255, 255, 0.3)', // Example color
     padding: 15,
+    borderColor: 'white',
+    borderWidth: 1,
     borderRadius: 5,
     // Add other styling properties as needed
   },
