@@ -152,4 +152,45 @@ export default StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  detailedInfoContainer: {
+    flex: 1,
+    // Add other styling properties as needed
+  },
+  detailedInfoBackground: {
+    flex: 1,
+    resizeMode: 'cover',
+    // Add other styling properties as needed
+  },
+  detailedInfoScrollView: {
+    margin: 10,
+    // Add other styling properties as needed
+  },
+  detailedInfoHeader: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    margin: 10,
+    // Add other styling properties as needed
+  },
+  detailedInfoText: {
+    fontSize: 16,
+    margin: 10,
+    // Add other styling properties as needed
+  },
+  detailedInfoButtonContainer: {
+    alignItems: 'center',
+    margin: 10,
+    // Add other styling properties as needed
+  },
+  detailedInfoButton: {
+    backgroundColor: '#007bff', // Example color
+    padding: 15,
+    borderRadius: 5,
+    // Add other styling properties as needed
+  },
+  detailedInfoButtonText: {
+    color: '#ffffff', // Example color
+    fontSize: 16,
+    // Add other styling properties as needed
+  },
 });

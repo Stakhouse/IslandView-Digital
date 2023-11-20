@@ -2,8 +2,14 @@
 import React from 'react';
 import { ScrollView, Text, View, ImageBackground, TouchableOpacity } from 'react-native';
 import styles from './styles';
+//import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from './StackNavigator';
 
-const BenefitsScreen = () => {
+type BenefitsScreenProps = {
+  navigation: StackNavigationProp<RootStackParamList, 'BenefitsScreen'>;
+};
+const BenefitsScreen: React.FC<BenefitsScreenProps> = ({ navigation }) => {
   return (
     <View style={styles.benefitsContainer}>
       <ImageBackground source={require('./images/BenefitsImage.png')} style={styles.benefitsBackground}>
@@ -53,9 +59,12 @@ const BenefitsScreen = () => {
     11. All-Day Exposure: Our taxis are on the move from dawn till dusk, offering continuous exposure for your brand.
   </Text>
          
-        </ScrollView>
+  </ScrollView>
         <View style={styles.benefitsButtonContainer}>
-          <TouchableOpacity style={styles.benefitsButton} onPress={() => {/* handle press event */}}>
+          <TouchableOpacity 
+            style={styles.benefitsButton} 
+            onPress={() => navigation.navigate('DetailedInfoScreen')} // Make sure 'DetailedInfoScreen' is defined in your navigator
+          >
             <Text style={styles.benefitsButtonText}>Learn More</Text>
           </TouchableOpacity>
         </View>
