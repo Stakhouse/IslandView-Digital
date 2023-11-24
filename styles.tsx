@@ -99,19 +99,20 @@ export default StyleSheet.create({
     paddingVertical: 20,
   },
   benefitsHeader: {
-    fontSize: 26,
+    fontSize: 28,
     fontWeight: 'bold',
     marginTop: 20,
     marginBottom: 10,
     textAlign: 'center',
-    color: '#ffffff',
+    color: 'white',
   },
   benefitsPoint: {
     fontSize: 25,
     marginTop: 10,
     marginBottom: 10,
     lineHeight: 25,
-    color: '#ffffff',
+    color: 'white',
+    fontWeight: 'bold',
   },
   lastPoint: {
     fontSize: 25,
@@ -119,6 +120,7 @@ export default StyleSheet.create({
     marginBottom: 60,
     lineHeight: 25,
     color: '#ffffff',
+    fontWeight:'bold'
   },
   benefitsButtonContainer: {
     padding: 8,
@@ -158,19 +160,21 @@ export default StyleSheet.create({
     // Add other styling properties as needed
   },
   infoParagraph: {
-    fontSize: 20,
+    fontSize: 25,
     margin: 10,
-    color: '#ffffff', // Assuming white text
+    color: '#ffffff',
+    fontWeight: 'bold',
+     // Assuming white text
     // Add other styling properties as needed
   },
   infoHeader: {
-    fontSize: 20,
+    fontSize: 28,
     fontWeight: 'bold',
     color: '#ffffff', // Assuming white text for headers
     // Add other styling properties as needed
   },
   mainHeader: {
-    fontSize: 22,
+    fontSize: 28,
     fontWeight: 'bold',
     color: '#ffffff', // Choose a suitable color
     textAlign: 'center',
@@ -179,7 +183,7 @@ export default StyleSheet.create({
     // Other styles...
   },
   callToAction: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
     margin: 10,
     color: '#ffffff', // Assuming white text for call to action
