@@ -11,7 +11,8 @@ type HomeStackParamList = {
   HelpStackScreen: undefined;
   ProfileStackScreen: undefined;
   MenuStackScreen: undefined;
-  BenefitsScreen: undefined; // Make sure this matches the screen name in StackNavigator
+  BenefitsScreen: undefined;
+  PackagesScreen:undefined; // Make sure this matches the screen name in StackNavigator
 };
 
 type HomeScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'HomeStackScreen'>;
@@ -26,7 +27,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   };
 
   const handlePackagesPress = () => {
-    // Navigation logic or other functionality
+    navigation.navigate('PackagesScreen'); // Corrected navigation logic for PackagesScreen
   };
 
   return (
@@ -59,27 +60,28 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={handleBenefitsPress} style={styles.gradientButton}>
-          <LinearGradient
-            colors={['#FFD700', '#FF6347', '#40E0D0', '#008000']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={styles.gradientBackground}
-          >
-            <Text style={styles.buttonText}>Benefits of Advertising with Us</Text>
-          </LinearGradient>
-        </TouchableOpacity>
-        <View style={styles.buttonSpacer} />
-        <TouchableOpacity onPress={handlePackagesPress} style={styles.gradientButton}>
-          <LinearGradient
-            colors={['#FFD700', '#FF6347', '#40E0D0', '#008000']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={styles.gradientBackground}
-          >
-            <Text style={styles.buttonText}>See Available Packages</Text>
-          </LinearGradient>
-        </TouchableOpacity>
+      <TouchableOpacity onPress={handleBenefitsPress} style={styles.gradientButton}>
+  <LinearGradient
+    colors={['#FFD700', '#FF6347', '#40E0D0', '#008000']}
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 1 }}
+    style={styles.gradientBackground}
+  >
+    <Text style={styles.buttonText}>Benefits of Advertising with Us</Text>
+  </LinearGradient>
+</TouchableOpacity>
+<TouchableOpacity onPress={handlePackagesPress} style={styles.gradientButton}>
+  <LinearGradient
+    colors={['#FFD700', '#FF6347', '#40E0D0', '#008000']}
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 1 }}
+    style={styles.gradientBackground}
+  >
+    <Text style={styles.packageButtonText}>See Available Packages</Text>
+  </LinearGradient>
+</TouchableOpacity>
+
+
       </View>
     </View>
   );

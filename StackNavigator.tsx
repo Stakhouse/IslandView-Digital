@@ -6,6 +6,7 @@ import ProfileScreen from './ProfileScreen';
 import MenuScreen from './MenuScreen';
 import BenefitsScreen from './BenefitsScreen';
 import DetailedInfoScreen from './DetailedInfoScreen'; // Import the DetailedInfoScreen component
+import PackagesScreen from './PackagesScreen';
 
 // Define the type for your navigation stack
 export type RootStackParamList = {
@@ -14,7 +15,8 @@ export type RootStackParamList = {
   ProfileStackScreen: undefined;
   MenuStackScreen: undefined;
   BenefitsScreen: undefined;
-  DetailedInfoScreen: undefined; // Add DetailedInfoScreen here
+  DetailedInfoScreen: undefined;
+  PackagesScreen:undefined;
   // Add other screens here
   SomeScreen: { someParam: string };
 };
@@ -34,6 +36,7 @@ function StackNavigator() {
       <Stack.Screen name="MenuStackScreen" component={MenuScreen} />
       <Stack.Screen name="BenefitsScreen" component={BenefitsScreen} />
       <Stack.Screen name="DetailedInfoScreen" component={DetailedInfoScreen} />
+      <Stack.Screen name="PackagesScreen" component = {PackagesScreen}/>
       {/* Add other screens here */}
     </Stack.Navigator>
   );

@@ -207,4 +207,50 @@ export default StyleSheet.create({
     fontSize: 16,
     // Add other styling properties as needed
   },
+  packagesContainer: {
+    flex: 1,
+    // Removed backgroundColor
+  },
+  packagesBackground: {
+    flex: 1,
+    resizeMode: 'cover', // Full background image
+  },
+  packagesScrollView: {
+    margin: 10,
+  },
+  packagesHeader: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: 'white', // Adjusted for visibility over the background
+    textAlign: 'center',
+    marginBottom: 20,
+    marginTop: statusBarHeight + 20,
+  },
+  packageDescription: {
+    fontSize: 25,
+    color: 'white', // Adjusted for visibility over the background
+    padding: 6,
+    fontWeight: 'bold',
+  },
+  packageButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    margin: 10,
+    paddingBottom: 20,
+  },
+  packageButton: {
+    backgroundColor: 'rgba(255, 255, 255, 0.3)', // Semi-transparent button
+    padding: 15,
+    borderColor: 'white',
+    borderWidth: 1,
+    borderRadius: 5,
+    width: windowWidth * 0.4,
+  },
+  packageButtonText: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
+    
 });
