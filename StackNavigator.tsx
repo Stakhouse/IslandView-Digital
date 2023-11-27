@@ -1,12 +1,12 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from './HomeScreen';
-import HelpScreen from './HelpScreen';
-import ProfileScreen from './ProfileScreen';
-import MenuScreen from './MenuScreen';
-import BenefitsScreen from './BenefitsScreen';
-import DetailedInfoScreen from './DetailedInfoScreen'; // Import the DetailedInfoScreen component
-import PackagesScreen from './PackagesScreen';
+import HomeScreen from './Screens/HomeScreen';
+import HelpScreen from './Screens/HelpScreen';
+import ProfileScreen from './Screens/ProfileScreen';
+import MenuScreen from './Screens/MenuScreen';
+import BenefitsScreen from './Screens/BenefitsScreen';
+import DetailedInfoScreen from './Screens/DetailedInfoScreen'; // Import the DetailedInfoScreen component
+import PackagesScreen from './Screens/PackagesScreen';
 
 // Define the type for your navigation stack
 export type RootStackParamList = {

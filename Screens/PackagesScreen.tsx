@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, ImageBackground, TouchableOpacity, ScrollView,Modal, Button,Switch} from 'react-native';
-import styles from './styles'; // Adjust the path as necessary
+import styles from '../styles'; // Adjust the path as necessary
 import { StackNavigationProp } from '@react-navigation/stack';
 
 
@@ -41,7 +41,7 @@ type RootStackParamList = {
       };
   return (
     <View style={styles.packagesContainer}>
-      <ImageBackground source={require('./images/PackagesBackground.jpg')} style={styles.packagesBackground}>
+      <ImageBackground source={require('../images/PackagesBackground.jpg')} style={styles.packagesBackground}>
         <ScrollView style={styles.packagesContainer}>
         <Text style={styles.packagesHeader}>Welcome to IslandView Digital</Text>
   <Text style={styles.packageDescription}>

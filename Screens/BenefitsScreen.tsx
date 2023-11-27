@@ -1,10 +1,10 @@
 
 import React from 'react';
 import { ScrollView, Text, View, ImageBackground, TouchableOpacity } from 'react-native';
-import styles from './styles';
+import styles from '../styles';
 //import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from './StackNavigator';
+import { RootStackParamList } from '../StackNavigator';
 
 type BenefitsScreenProps = {
   navigation: StackNavigationProp<RootStackParamList, 'BenefitsScreen'>;
@@ -12,7 +12,7 @@ type BenefitsScreenProps = {
 const BenefitsScreen: React.FC<BenefitsScreenProps> = ({ navigation }) => {
   return (
     <View style={styles.benefitsContainer}>
-      <ImageBackground source={require('./images/BenefitsImage.png')} style={styles.benefitsBackground}>
+      <ImageBackground source={require('../images/BenefitsImage.png')} style={styles.benefitsBackground}>
         <ScrollView style={styles.benefitsScrollView}>
           <Text style={styles.benefitsHeader}>Why Our Taxi-Top Advertising Stands Out:</Text>
 

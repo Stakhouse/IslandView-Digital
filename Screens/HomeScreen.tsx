@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StatusBar, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import styles from './styles';
+import styles from '../styles';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 type ImageSourcePropType = number | { uri: string };
@@ -35,7 +35,9 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       <StatusBar translucent backgroundColor="#004d91" />
       <View style={styles.imageContainer}>
         <Image
-          source={require('./images/IislandViewDigital.png')}
+        // correct my image import
+
+          source={require('../images/IislandViewDigital.png')}
           style={styles.fullWidthImage}
         />
         <View style={styles.overlayText}>

@@ -1,8 +1,8 @@
 import React from 'react';
 import { ScrollView, Text, View, ImageBackground, TouchableOpacity } from 'react-native';
-import styles from './styles'; // Ensure all referenced styles are defined here
+import styles from '../styles'; // Ensure all referenced styles are defined here
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from './StackNavigator';
+import { RootStackParamList } from '../StackNavigator';
 
 type DetailedInfoScreenProps = {
   navigation: StackNavigationProp<RootStackParamList, 'DetailedInfoScreen'>;
@@ -11,7 +11,7 @@ type DetailedInfoScreenProps = {
 const DetailedInfoScreen: React.FC<DetailedInfoScreenProps> = ({ navigation }) => {
   return (
     <View style={styles.detailedInfoContainer}>
-      <ImageBackground source={require('./images/TheEye.png')} style={styles.detailedInfoBackground}>
+      <ImageBackground source={require('../images/TheEye.png')} style={styles.detailedInfoBackground}>
         <ScrollView style={styles.detailedInfoScrollView}>
         <Text style={styles.mainHeader}>Why Digital Billboard Advertising is the Future of Urban Engagement</Text>
         <Text style={styles.infoParagraph}>
@@ -66,11 +66,11 @@ const DetailedInfoScreen: React.FC<DetailedInfoScreenProps> = ({ navigation }) =
           {/* Additional content can be added here */}
         </ScrollView>
         <View style={styles.detailedInfoButtonContainer}>
-          <TouchableOpacity 
-            style={styles.detailedInfoButton} 
-            onPress={() => navigation.goBack()}>
-            <Text style={styles.detailedInfoButtonText}>Back to Packages</Text>
-          </TouchableOpacity>
+        <TouchableOpacity 
+  style={styles.detailedInfoButton} 
+  onPress={() => navigation.navigate('PackagesScreen')}>
+  <Text style={styles.detailedInfoButtonText}>Back to Packages</Text>
+</TouchableOpacity>
         </View>
       </ImageBackground>
     </View>

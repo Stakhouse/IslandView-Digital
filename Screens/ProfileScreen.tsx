@@ -8,7 +8,7 @@ const ProfileScreen: React.FC = () => {
 
   const handleLoginPress = () => {
     if (!isLoggedIn) {
-      // Navigate to login screen logic here
+    // Navigate to login screen logic here
     }
   };
 
