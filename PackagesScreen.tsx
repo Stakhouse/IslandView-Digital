@@ -1,27 +1,44 @@
-import React from 'react';
-import { View, Text, ImageBackground, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, ImageBackground, TouchableOpacity, ScrollView,Modal, Button,Switch} from 'react-native';
 import styles from './styles'; // Adjust the path as necessary
 import { StackNavigationProp } from '@react-navigation/stack';
 
+
 type RootStackParamList = {
-
-  PackagesScreen: undefined;
-};
-
-type PackagesScreenProps = {
-  navigation: StackNavigationProp<RootStackParamList, 'PackagesScreen'>;
-};
-
-const PackagesScreen: React.FC<PackagesScreenProps> = ({ navigation }) => {
-  // Example onPress functions (you can modify these as needed)
-  const handlePeakPackagePress = () => {
-    // Navigation or other logic for Peak Package
+    PackagesScreen: undefined;
   };
-
-  const handleOffPeakPackagePress = () => {
-    // Navigation or other logic for Off-Peak Package
+  
+  type PackagesScreenProps = {
+    navigation: StackNavigationProp<RootStackParamList, 'PackagesScreen'>;
   };
-
+  
+  const PackagesScreen: React.FC<PackagesScreenProps> = ({ navigation }) => {
+    const [isPeakModalVisible, setPeakModalVisible] = useState(false);
+    const [isOffPeakModalVisible, setOffPeakModalVisible] = useState(false);
+    const [morningPackageSelected, setMorningPackageSelected] = useState(false);
+    const [eveningPackageSelected, setEveningPackageSelected] = useState(false);
+    const [offPeakPackageSelected, setOffPeakPackageSelected] = useState(false);
+    const [totalCost, setTotalCost] = useState(0);
+  
+    const handlePeakPackagePress = () => {
+      setPeakModalVisible(true);
+    };
+  
+    const handleOffPeakPackagePress = () => {
+      setOffPeakModalVisible(true);
+    };
+  
+    const calculateTotalCost = (isPeak: boolean) => {
+        let cost = 0;
+        if (isPeak) {
+          if (morningPackageSelected) cost += 10 * 3; // $10 per hour for 3 hours
+          if (eveningPackageSelected) cost += 10 * 5; // $10 per hour for 5 hours
+        } else {
+          if (offPeakPackageSelected) cost += 5 * 5; // $5 per hour for 5 hours
+        }
+        setTotalCost(cost);
+        alert(`Total Cost: $${cost}`);
+      };
   return (
     <View style={styles.packagesContainer}>
       <ImageBackground source={require('./images/PackagesBackground.jpg')} style={styles.packagesBackground}>
@@ -80,6 +97,68 @@ const PackagesScreen: React.FC<PackagesScreenProps> = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </ImageBackground>
+     {/* Peak Package Modal */}
+     <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isPeakModalVisible}
+        onRequestClose={() => setPeakModalVisible(!isPeakModalVisible)}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Choose Your Peak Package</Text>
+            <View style={styles.modalOption}>
+              <Text style={styles.modalText}>Morning: 7:00 a.m. - 10:00 a.m.</Text>
+              <Switch
+                onValueChange={() => setMorningPackageSelected(!morningPackageSelected)}
+                value={morningPackageSelected}
+              />
+            </View>
+            <View style={styles.modalOption}>
+              <Text style={styles.modalText}>Evening: 3:00 p.m. - 8:00 p.m.</Text>
+              <Switch
+                onValueChange={() => setEveningPackageSelected(!eveningPackageSelected)}
+                value={eveningPackageSelected}
+              />
+            </View>
+            <Button
+              title="Confirm"
+              onPress={() => calculateTotalCost(true)}
+            />
+            <Button
+              title="Close"
+              onPress={() => setPeakModalVisible(!isPeakModalVisible)}
+            />
+          </View>
+        </View>
+      </Modal>
+
+      {/* Off-Peak Package Modal */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isOffPeakModalVisible}
+        onRequestClose={() => setOffPeakModalVisible(!isOffPeakModalVisible)}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Choose Your Off-Peak Package</Text>
+            <View style={styles.modalOption}>
+              <Text style={styles.modalText}>Time: 10:00 a.m. - 3:00 p.m.</Text>
+              <Switch
+                onValueChange={() => setOffPeakPackageSelected(!offPeakPackageSelected)}
+                value={offPeakPackageSelected}
+              />
+            </View>
+            <Button
+              title="Confirm"
+              onPress={() => calculateTotalCost(false)}
+            />
+            <Button
+              title="Close"
+              onPress={() => setOffPeakModalVisible(!isOffPeakModalVisible)}
+            />
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
