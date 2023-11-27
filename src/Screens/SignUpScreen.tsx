@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../StackNavigator'; // Import your RootStackParamList type
+import { RootStackParamList } from '../navigation/navigationTypes'; // Import your RootStackParamList type
 
 type SignUpScreenNavigationProp = StackNavigationProp<
   RootStackParamList,

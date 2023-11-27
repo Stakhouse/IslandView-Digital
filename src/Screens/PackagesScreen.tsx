@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, ImageBackground, TouchableOpacity, ScrollView,Modal, Button,Switch} from 'react-native';
-import styles from '../styles'; // Adjust the path as necessary
+import styles from '../components/styles'; // Adjust the path as necessary
 import { StackNavigationProp } from '@react-navigation/stack';
 
 

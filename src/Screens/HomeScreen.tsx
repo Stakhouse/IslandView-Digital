@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StatusBar, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import styles from '../styles';
+import styles from '../components/styles';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 type ImageSourcePropType = number | { uri: string };

@@ -1,10 +1,10 @@
 
 import React from 'react';
 import { ScrollView, Text, View, ImageBackground, TouchableOpacity } from 'react-native';
-import styles from '../styles';
+import styles from '../components/styles';
 //import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../StackNavigator';
+import { RootStackParamList } from '../navigation/navigationTypes';
 
 type BenefitsScreenProps = {
   navigation: StackNavigationProp<RootStackParamList, 'BenefitsScreen'>;

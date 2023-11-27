@@ -2,10 +2,10 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import StackNavigator from './StackNavigator'; // Import your StackNavigator
-import HomeScreen from './Screens/HomeScreen';
-import ProfileScreen from './Screens/ProfileScreen';
-import HelpScreen from './Screens/HelpScreen';
-import MenuScreen from './Screens/MenuScreen';
+import HomeScreen from '../Screens/HomeScreen';
+import ProfileScreen from '../Screens/SignUpScreen';
+import HelpScreen from '../Screens/HelpScreen';
+import MenuScreen from '../Screens/MenuScreen';
 // Import your BenefitsScreen if you have a separate screen component for it
 // import BenefitsScreen from './BenefitsScreen';
 

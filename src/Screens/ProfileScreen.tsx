@@ -1,7 +1,12 @@
 import React from 'react';
+import { RootStackParamList } from '../navigation/navigationTypes';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const ProfileScreen: React.FC = () => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
 
   return (
     <View style={styles.container}>
@@ -32,7 +37,7 @@ const ProfileScreen: React.FC = () => {
       </View>
       <View style={styles.signupContainer}>
         <Text>Don't have an account?</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')}>
           <Text style={styles.signupText}>Sign Up!</Text>
         </TouchableOpacity>
       </View>
@@ -40,7 +45,7 @@ const ProfileScreen: React.FC = () => {
   );
 };
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',

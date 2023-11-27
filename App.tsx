@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 //import HomeScreen from './HomeScreen'; // Import the new HomeScreen component
 import { loadFonts } from './FontLoader';
 import * as SplashScreen from 'expo-splash-screen';
-import BottomTabNavigator from './ BottomTabNavigator'; 
+import BottomTabNavigator from './src/navigation/BottomTabNavigator'; 
 // Prepare the splash screen API to be used to prevent auto hiding.
 SplashScreen.preventAutoHideAsync();
 

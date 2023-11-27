@@ -1,8 +1,8 @@
 import React from 'react';
 import { ScrollView, Text, View, ImageBackground, TouchableOpacity } from 'react-native';
-import styles from '../styles'; // Ensure all referenced styles are defined here
+import styles from '../components/styles'; // Ensure all referenced styles are defined here
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../StackNavigator';
+import { RootStackParamList } from '../navigation/StackNavigator';
 
 type DetailedInfoScreenProps = {
   navigation: StackNavigationProp<RootStackParamList, 'DetailedInfoScreen'>;
