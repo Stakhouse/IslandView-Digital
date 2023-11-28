@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../navigation/navigationTypes'; // Import your RootStackParamList type
-
+import Icon from 'react-native-vector-icons/FontAwesome'; // Import your FontAwesome icon
 type SignUpScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
   'SignUpScreen' // Make sure this matches the name of the screen as defined in your RootStackParamList
@@ -27,8 +27,25 @@ const SignUpScreen: React.FC<Props> = ({ navigation }) =>  { // Corrected this l
       <TouchableOpacity style={styles.saveButton}>
         <Text style={styles.saveButtonText}>Save</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.goBack()}> {/* navigation is used here */}
-        <Text style={styles.returnLoginText}>Return to Login</Text>
+      
+      <TouchableOpacity style={styles.socialButton}>
+        <Icon name="facebook" size={24} color="#000" style={{ marginRight: 10 }} /> 
+        <Text>Sign Up with Facebook</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.socialButton}>
+        <Icon name="twitter" size={24} color="#000" style={{ marginRight: 10 }} /> 
+        <Text>Sign Up with Twitter</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.socialButton}>
+        <Icon name="google" size={24} color="#000" style={{ marginRight: 10 }} /> 
+        <Text>Sign Up with Google</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.socialButton}>
+        <Icon name="whatsapp" size={24} color="#000"style={{ marginRight: 10 }}  /> 
+        <Text>Sign Up with WhatsApp</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Text style={{ textAlign: 'center',fontWeight:'bold',color:"red",fontSize:25,}}>Go Back</Text>
       </TouchableOpacity>
     </View>
   );
@@ -47,6 +64,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 24,
     fontWeight: 'bold',
+    marginTop: 20,
   },
   input: {
     backgroundColor: '#fff',
@@ -72,7 +90,17 @@ const styles = StyleSheet.create({
   returnLoginText: {
     textAlign: 'center',
     color: '#e91e63',
-    marginTop: 20,
+    margin: 20,
+    paddingLeft: 20,
+  },
+  socialButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 15,
+    margin: 10,
+    borderRadius: 20,
+    backgroundColor: '#ddd',
   },
 });
 
