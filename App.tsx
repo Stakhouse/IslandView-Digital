@@ -1,15 +1,11 @@
-
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-//import HomeScreen from './HomeScreen'; // Import the new HomeScreen component
+import BottomTabNavigator from './src/navigation/BottomTabNavigator';
 import { loadFonts } from './FontLoader';
 import * as SplashScreen from 'expo-splash-screen';
-import BottomTabNavigator from './src/navigation/BottomTabNavigator'; 
-// Prepare the splash screen API to be used to prevent auto hiding.
-SplashScreen.preventAutoHideAsync();
 
-const Tab = createBottomTabNavigator();
+// Prevent the splash screen from hiding automatically
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -17,11 +13,13 @@ export default function App() {
   useEffect(() => {
     async function prepare() {
       try {
+        // Load custom fonts
         await loadFonts();
         setFontsLoaded(true);
       } catch (e) {
-        console.warn(e);
+        console.warn('Error loading fonts:', e);
       } finally {
+        // Hide the splash screen once fonts are loaded
         await SplashScreen.hideAsync();
       }
     }
@@ -29,13 +27,15 @@ export default function App() {
     prepare();
   }, []);
 
+  // Render nothing until fonts are loaded
   if (!fontsLoaded) {
     return null;
   }
+
+  // Render the app with BottomTabNavigator inside the NavigationContainer
   return (
     <NavigationContainer>
-      <BottomTabNavigator/>
+      <BottomTabNavigator />
     </NavigationContainer>
   );
- 
 }
