@@ -3,23 +3,30 @@ import { View, Text, Image, TouchableOpacity, StatusBar, ScrollView } from 'reac
 import { LinearGradient } from 'expo-linear-gradient';
 import styles from '../components/styles';
 import { StackNavigationProp } from '@react-navigation/stack';
+import ProfileStackNavigator from '../navigation/ProfileStackNavigator';
 
-type ImageSourcePropType = number | { uri: string };
 
 type HomeStackParamList = {
-  HomeStackScreen: undefined;
-  HelpStackScreen: undefined;
-  ProfileStackScreen: undefined;
-  MenuStackScreen: undefined;
+  HomeScreen: undefined;
+  HelpScreen: undefined;
+  ProfileScreen: undefined;
+  MenuScreen: undefined;
   BenefitsScreen: undefined;
-  PackagesScreen:undefined; // Make sure this matches the screen name in StackNavigator
+  PackagesScreen:undefined;
+  DetailedInfoScreen: undefined;
+  SignUpScreen: undefined;
 };
 
-type HomeScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'HomeStackScreen'>;
+type HomeScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'HomeScreen'>;
 
 type Props = {
   navigation: HomeScreenNavigationProp;
 };
+const handleProfilePress = () => {
+  // Navigate to the ProfileScreen within the ProfileStackNavigator
+ProfileStackNavigator('Profile', { screen: 'ProfileScreen' });
+};
+
 
 const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const handleBenefitsPress = () => {
@@ -32,12 +39,10 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar translucent backgroundColor="#004d91" />
+      <StatusBar translucent backgroundColor="#004d91"/>
       <View style={styles.imageContainer}>
         <Image
-        // correct my image import
-
-          source={require('../images/IislandViewDigital.png')}
+      source={require('../images/IislandViewDigital.png')}
           style={styles.fullWidthImage}
         />
         <View style={styles.overlayText}>

@@ -132,7 +132,6 @@ type RootStackParamList = {
         </View>
       </Modal>
 
-      {/* Off-Peak Package Modal */}
       <Modal
         animationType="slide"
         transparent={true}

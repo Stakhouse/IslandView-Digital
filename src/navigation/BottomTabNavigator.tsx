@@ -1,58 +1,48 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import StackNavigator from './StackNavigator'; // Import your StackNavigator
+import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from '../Screens/HomeScreen';
-import ProfileScreen from '../Screens/ProfileScreen';
 import HelpScreen from '../Screens/HelpScreen';
 import MenuScreen from '../Screens/MenuScreen';
-// Import your BenefitsScreen if you have a separate screen component for it
-// import BenefitsScreen from './BenefitsScreen';
+import ProfileStackNavigator from './ProfileStackNavigator'; // This should return a valid React component
+import ProfileScreen from '../Screens/ProfileScreen';
+import BenefitsScreen from '../Screens/BenefitsScreen';
+import PackagesScreen from '../Screens/PackagesScreen';
 
 const Tab = createBottomTabNavigator();
 
-function BottomTabNavigator() {
+// This component sets up the bottom tab navigator with four tabs: Home, Profile, Help, and Menu.
+const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
-        headerShown: false,
-        tabBarIcon: ({ focused, color, size }) => {
+    screenOptions={({ route }) => ({
+      headerShown: false, // This will hide the header
+      tabBarIcon: ({ focused, color, size }) => {
           let iconName;
-          switch (route.name) {
-            case 'Home':
-              iconName = focused ? 'ios-home' : 'ios-home-outline';
-              break;
-            case 'Profile':
-              iconName = focused ? 'ios-person' : 'ios-person-outline';
-              break;
-            case 'Help':
-              iconName = focused ? 'ios-help-circle' : 'ios-help-circle-outline';
-              break;
-            case 'Menu':
-              iconName = focused ? 'ios-menu' : 'ios-menu-outline';
-              break;
-            // Ensure you have a case for 'Benefits' if you have a Benefits tab
-            // case 'Benefits':
-            //   iconName = focused ? 'ios-gift' : 'ios-gift-outline';
-            //   break;
-            default:
-              iconName = 'ios-information-circle';
-              break;
+          if (route.name === 'Home') {
+            iconName = focused ? 'ios-home' : 'ios-home-outline';
+          } else if (route.name === 'Profile') {
+            iconName = focused ? 'ios-person' : 'ios-person-outline';
+          } else if (route.name === 'Help') {
+            iconName = focused ? 'ios-help-circle' : 'ios-help-circle-outline';
+          } else if (route.name === 'Menu') {
+            iconName = focused ? 'ios-menu' : 'ios-menu-outline';
           }
-          return <Ionicons name={iconName} size={size} color={color} />;
+          // 'as keyof typeof Ionicons.glyphMap' is used to ensure type safety for icon names.
+          return <Ionicons name={iconName as keyof typeof Ionicons.glyphMap} size={size} color={color}/>;
         },
         tabBarActiveTintColor: 'tomato',
         tabBarInactiveTintColor: 'gray',
       })}
     >
-      <Tab.Screen name="Home" component={StackNavigator} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
-      <Tab.Screen name="Help" component={HelpScreen} />
-      <Tab.Screen name="Menu" component={MenuScreen} />
-      {/* If you want to add a tab for Benefits, uncomment the line below and ensure you import BenefitsScreen */}
-      {/* <Tab.Screen name="Benefits" component={BenefitsScreen} /> */}
+      <Tab.Screen name="Home" component={HomeScreen}/>
+      <Tab.Screen name="Profile" component={ProfileStackNavigator}/> 
+      <Tab.Screen name="Help" component={HelpScreen}/>
+      <Tab.Screen name="Menu" component={MenuScreen}/>
+      <Tab.Screen name = "BenefitsScreen" component={BenefitsScreen}/>
+      <Tab.Screen name ="PackagesScreen" component={PackagesScreen}/>
     </Tab.Navigator>
   );
-}
+};
 
 export default BottomTabNavigator;

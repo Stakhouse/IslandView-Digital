@@ -1,5 +1,9 @@
 import React from 'react';
 import { RootStackParamList } from '../navigation/navigationTypes';
+
+// Add the following line to make sure 'navigationTypes.tsx' is treated as a module
+export {};
+
 import { StackNavigationProp } from '@react-navigation/stack';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
