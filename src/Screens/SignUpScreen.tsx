@@ -1,18 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../navigation/navigationTypes'; // Import your RootStackParamList type
-import Icon from 'react-native-vector-icons/FontAwesome'; // Import your FontAwesome icon
-type SignUpScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'SignUpScreen' // Make sure this matches the name of the screen as defined in your RootStackParamList
->;
+import { ProfileStackParamList } from '../navigation/ProfileStackNavigator'; // Adjust the import path as necessary
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+type SignUpScreenNavigationProp = StackNavigationProp<ProfileStackParamList, 'SignUpScreen'>;
 
 type Props = {
   navigation: SignUpScreenNavigationProp;
 };
 
-// Use the Props type for your component's props
 const SignUpScreen: React.FC<Props> = ({ navigation }) =>  { // Corrected this line
 
   return (

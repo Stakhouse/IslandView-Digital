@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import ProfileScreen from '../Screens/ProfileScreen';
 import SignUpScreen from '../Screens/SignUpScreen';
 
-type ProfileStackParamList = {
+export type ProfileStackParamList = {
     ProfileScreen: undefined;
     SignUpScreen: undefined;
 };

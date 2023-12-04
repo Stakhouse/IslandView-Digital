@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "524343102858",
+    "project_id": "islandview-digital",
+    "storage_bucket": "islandview-digital.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:524343102858:android:a07ad37e32b3c2c9fe0c73",
+        "android_client_info": {
+          "package_name": "MainApplication.java"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBp2o4z8gmrzI6x0NuBkuCfhneCrXrdTng"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

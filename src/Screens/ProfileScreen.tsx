@@ -1,47 +1,85 @@
-import React from 'react';
-import { RootStackParamList } from '../navigation/navigationTypes';
 
-// Add the following line to make sure 'navigationTypes.tsx' is treated as a module
-export {};
-
-import { StackNavigationProp } from '@react-navigation/stack';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
+//import { useNavigation } from '@react-navigation/native';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {ProfileStackParamList} from '../navigation/ProfileStackNavigator';
 import { useNavigation } from '@react-navigation/native';
+// ...
 
-const ProfileScreen: React.FC = () => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+const navigation = useNavigation<StackNavigationProp<ProfileStackParamList>>();
 
+// ...
 
+const ProfileScreen = () => {
+  const navigation = useNavigation();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const handleLogin = async () => {
+    setIsLoading(true);
+    try {
+      const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+      if (userCredential.user) {
+        await AsyncStorage.setItem('userToken', userCredential.user.uid); // Ensure user.uid is a string
+        setIsLoading(false);
+        // Navigate to another screen or update the UI
+      } else {
+        // Handle the case where user is null
+        setIsLoading(false);
+        console.error('User object is null');
+      }
+    } catch (error) {
+      setIsLoading(false);
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        console.error('Unexpected error during login', error);
+      }
+    }
+  };
+  
+  const navigateToSignUp = () => {
+    navigation.navigate('SignUpScreen');
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.welcomeText}>Welcome</Text>
       </View>
       <View style={styles.inputContainer}>
-        <TextInput placeholder="Email" style={styles.input} />
-        <TextInput placeholder="Password" style={styles.input} secureTextEntry />
+        <TextInput
+          placeholder="Email"
+          style={styles.input}
+          value={email}
+          onChangeText={setEmail}
+          autoCapitalize="none"
+          keyboardType="email-address"
+        />
+        <TextInput
+          placeholder="Password"
+          style={styles.input}
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
       </View>
-      <TouchableOpacity style={styles.loginButton}>
-        <Text style={styles.loginButtonText}>Login</Text>
-      </TouchableOpacity>
-      <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
-      <View style={styles.socialLoginContainer}>
-        <TouchableOpacity style={styles.socialButton}>
-          <Image source={require('../images/TwitterLogo.png')} style={styles.socialIcon} />
+      {isLoading ? (
+        <ActivityIndicator size="large" color="#0000ff" />
+      ) : (
+        <TouchableOpacity style={styles.loginButton} onPress={handleLogin} disabled={isLoading}>
+          <Text style={styles.loginButtonText}>Login</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.socialButton}>
-          <Image source={require('../images/FBIcon.png')} style={styles.socialIcon} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.socialButton}>
-          <Image source={require('../images/GoogleIcon.png')} style={styles.socialIcon} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.socialButton}>
-          <Image source={require('../images/WhatsApp.png')} style={styles.socialIcon} />
-        </TouchableOpacity>
-      </View>
+      )}
+      <Text style={styles.forgotPasswordText} onPress={() => {/* Implement forgot password logic */}}>
+        Forgot Password?
+      </Text>
       <View style={styles.signupContainer}>
         <Text>Don't have an account?</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')}>
+        <TouchableOpacity onPress={navigateToSignUp}>
           <Text style={styles.signupText}>Sign Up!</Text>
         </TouchableOpacity>
       </View>

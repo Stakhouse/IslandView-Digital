@@ -1,40 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import BottomTabNavigator from './src/navigation/BottomTabNavigator';
-import { loadFonts } from './FontLoader';
-import * as SplashScreen from 'expo-splash-screen';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+//import LoginScreen from './src/screens/LoginScreen'; // hypothetical login screen
+import ProfileScreen from './src/Screens/ProfileScreen';
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD9Oi971diD82GFJTNP7fAWiUg6kJdL5hY",
+  authDomain: "islandview-digital.firebaseapp.com",
+  databaseURL: "https://islandview-digital.firebaseio.com",
+  projectId: "islandview-digital",
+  storageBucket: "islandview-digital.appspot.com",
+  messagingSenderId: "1055372172009",
+  appId: "1:524343102858:android:a07ad37e32b3c2c9fe0c73",
+};
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [user, setUser] = useState<firebase.User | null>(null);
 
   useEffect(() => {
-    async function prepare() {
-      try {
-        // Attempt to load custom fonts
-        await loadFonts();
-        // If successful, set the state to indicate fonts are loaded
-        setFontsLoaded(true);
-      } catch (e) {
-        // If an error occurs, log it to the console
-        console.warn('Error loading fonts:', e);
-      } finally {
-        // Hide the splash screen regardless of the outcome
-        await SplashScreen.hideAsync();
-      }
-    }
-
-    prepare();
+    const unsubscribe = firebase.auth().onAuthStateChanged(
+      currentUser => setUser(currentUser),
+      error => console.error('Firebase auth state change error:', error)
+    );
+    return () => unsubscribe();
   }, []);
 
-  // If fonts are not loaded, return null to avoid rendering the app
   if (!fontsLoaded) {
     return null;
   }
 
-  // Once fonts are loaded, render the app with BottomTabNavigator
   return (
     <NavigationContainer>
-      <BottomTabNavigator />
+      {user ? <BottomTabNavigator /> : <ProfileScreen />}
     </NavigationContainer>
   );
 }
