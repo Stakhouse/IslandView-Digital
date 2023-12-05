@@ -1,10 +1,10 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import ProfileScreen from '../Screens/ProfileScreen';
+import LoginScreen from '../Screens/LoginScreen';
 import SignUpScreen from '../Screens/SignUpScreen';
 
 type ProfileStackParamList = {
-    ProfileScreen: undefined;
+    LoginScreen: undefined;
     SignUpScreen: undefined;
 };
 
@@ -12,8 +12,8 @@ const ProfileStack = createStackNavigator<ProfileStackParamList>();
 
 const ProfileStackNavigator: React.FC = () => {
     return (
-        <ProfileStack.Navigator initialRouteName="ProfileScreen">
-            <ProfileStack.Screen name="ProfileScreen" component={ProfileScreen} options={{ headerShown: false }}/>
+        <ProfileStack.Navigator initialRouteName="LoginScreen">
+            <ProfileStack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }}/>
             <ProfileStack.Screen name="SignUpScreen" component={SignUpScreen} options={{ headerShown: false }}/>
         </ProfileStack.Navigator>
     );

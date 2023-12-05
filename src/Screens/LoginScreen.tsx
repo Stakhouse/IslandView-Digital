@@ -8,7 +8,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const ProfileScreen: React.FC = () => {
+const LoginScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
 
@@ -113,4 +113,4 @@ export const styles = StyleSheet.create({
   },
 });
 
-export default ProfileScreen;
+export default LoginScreen;
