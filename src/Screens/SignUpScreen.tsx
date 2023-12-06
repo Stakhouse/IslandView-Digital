@@ -1,33 +1,76 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../navigation/navigationTypes'; // Import your RootStackParamList type
-import Icon from 'react-native-vector-icons/FontAwesome'; // Import your FontAwesome icon
+import { RootStackParamList } from '../navigation/navigationTypes';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+
 type SignUpScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
-  'SignUpScreen' // Make sure this matches the name of the screen as defined in your RootStackParamList
+  'SignUpScreen'
 >;
 
 type Props = {
   navigation: SignUpScreenNavigationProp;
 };
 
-// Use the Props type for your component's props
-const SignUpScreen: React.FC<Props> = ({ navigation }) =>  { // Corrected this line
+const SignUpScreen: React.FC<Props> = ({ navigation }) => {
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+
+  const handleSignUp = () => {
+    const auth = getAuth();
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // User signed up successfully
+        // You can navigate to another screen or reset the form here
+      })
+      .catch((error) => {
+        // Handle errors here, such as displaying a notification
+        console.error('Error signing up: ', error);
+      });
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerText}>Sign Up</Text>
       </View>
-      <TextInput placeholder="Enter Full Name" style={styles.input} />
-      <TextInput placeholder="Enter Email" style={styles.input} />
-      <TextInput placeholder="Enter Password" style={styles.input} secureTextEntry />
-      <TextInput placeholder="Enter Phone Number" style={styles.input} />
-      <TouchableOpacity style={styles.saveButton}>
+      <TextInput
+        placeholder="Enter Full Name"
+        style={styles.input}
+        value={fullName}
+        onChangeText={setFullName}
+      />
+      <TextInput
+        placeholder="Enter Email"
+        style={styles.input}
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+      />
+      <TextInput
+        placeholder="Enter Password"
+        style={styles.input}
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+      />
+      <TextInput
+        placeholder="Enter Phone Number"
+        style={styles.input}
+        value={phoneNumber}
+        onChangeText={setPhoneNumber}
+        keyboardType="phone-pad"
+      />
+      <TouchableOpacity style={styles.saveButton} onPress={handleSignUp}>
         <Text style={styles.saveButtonText}>Save</Text>
       </TouchableOpacity>
       
+      {/* Social Media Sign Up Buttons */}
+      {/* Implement the logic for social media sign up in these buttons */}
       <TouchableOpacity style={styles.socialButton}>
         <Icon name="facebook" size={24} color="#000" style={{ marginRight: 10 }} /> 
         <Text>Sign Up with Facebook</Text>
@@ -50,6 +93,8 @@ const SignUpScreen: React.FC<Props> = ({ navigation }) =>  { // Corrected this l
     </View>
   );
 };
+
+// Define your styles here
 
 const styles = StyleSheet.create({
   container: {

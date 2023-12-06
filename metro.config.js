@@ -1,4 +1,3 @@
-
 const { getDefaultConfig } = require('metro-config');
 
 module.exports = (async () => {
@@ -8,8 +7,10 @@ module.exports = (async () => {
 
   return {
     resolver: {
-      assetExts: [...assetExts, 'webp','png'], // Ensure 'webp' is included
-      sourceExts,
+      // Add 'cjs' to the sourceExts array
+      sourceExts: [...sourceExts, 'cjs'],
+      // Ensure 'webp' and 'png' are included in assetExts
+      assetExts: [...assetExts, 'webp', 'png'],
     },
   };
 })();

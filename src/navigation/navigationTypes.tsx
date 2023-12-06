@@ -7,5 +7,6 @@ type RootStackParamList = {
   PackagesScreen: undefined;
   SignUpScreen: undefined;
   LoginScreen: undefined;
+  ProfileScreen: undefined;
 };
 export type { RootStackParamList }; // Add this line

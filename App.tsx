@@ -3,6 +3,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import BottomTabNavigator from './src/navigation/BottomTabNavigator';
 import { loadFonts } from './FontLoader';
 import * as SplashScreen from 'expo-splash-screen';
+import './src/components/firebaseConfig'; // Firebase initialization
+import 'react-native-gesture-handler';
+// ... other imports
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
