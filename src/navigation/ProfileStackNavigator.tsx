@@ -4,10 +4,10 @@ import LoginScreen from '../Screens/LoginScreen';
 import SignUpScreen from '../Screens/SignUpScreen';
 import ProfileScreen from '../Screens/ProfileScreen';
 
-type ProfileStackParamList = {
+export type ProfileStackParamList = {
     LoginScreen: undefined;
     SignUpScreen: undefined;
-    ProfileScreen: undefined;
+    ProfileScreen: { user?: string }; 
 };
 
 const ProfileStack = createStackNavigator<ProfileStackParamList>();

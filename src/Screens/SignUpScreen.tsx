@@ -1,37 +1,42 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../navigation/navigationTypes';
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { useNavigation } from '@react-navigation/native';
+import { NavigationProp } from '@react-navigation/native';
+import {ProfileStackParamList} from '../navigation/ProfileStackNavigator'; // Replace with actual path
 
-type SignUpScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'SignUpScreen'
->;
-
-type Props = {
-  navigation: SignUpScreenNavigationProp;
-};
-
-const SignUpScreen: React.FC<Props> = ({ navigation }) => {
+const SignUpScreen: React.FC = () => {
+  const navigation = useNavigation<NavigationProp<ProfileStackParamList>>();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
   const handleSignUp = () => {
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // User signed up successfully
-        // You can navigate to another screen or reset the form here
+        // Signed in 
+        const user = userCredential.user;
+        console.log('User signed up: ', user?.email);
+        return updateProfile(userCredential.user, {
+          displayName: fullName,
+        });
+      })
+      .then(() => {
+        
+        navigation.navigate( 'ProfileScreen', { user: fullName });
       })
       .catch((error) => {
-        // Handle errors here, such as displaying a notification
         console.error('Error signing up: ', error);
       });
   };
+  
 
   return (
     <View style={styles.container}>
@@ -49,15 +54,24 @@ const SignUpScreen: React.FC<Props> = ({ navigation }) => {
         style={styles.input}
         value={email}
         onChangeText={setEmail}
+        autoCapitalize="none"
         keyboardType="email-address"
       />
-      <TextInput
-        placeholder="Enter Password"
-        style={styles.input}
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
+<View style={{ flexDirection: 'row', alignItems: 'center', position: 'relative' }}>
+  <TextInput
+    placeholder="Enter Password"
+    style={{ ...styles.input, flex: 1 }}
+    value={password}
+    onChangeText={setPassword}
+    secureTextEntry={!passwordVisible}
+  />
+  <TouchableOpacity 
+    onPress={togglePasswordVisibility} 
+    style={{ position: 'absolute', right: 10 }}
+  >
+    <Icon name={passwordVisible ? 'eye-slash' : 'eye'} size={20} color="grey" />
+  </TouchableOpacity>
+</View>
       <TextInput
         placeholder="Enter Phone Number"
         style={styles.input}
@@ -69,8 +83,7 @@ const SignUpScreen: React.FC<Props> = ({ navigation }) => {
         <Text style={styles.saveButtonText}>Save</Text>
       </TouchableOpacity>
       
-      {/* Social Media Sign Up Buttons */}
-      {/* Implement the logic for social media sign up in these buttons */}
+     
       <TouchableOpacity style={styles.socialButton}>
         <Icon name="facebook" size={24} color="#000" style={{ marginRight: 10 }} /> 
         <Text>Sign Up with Facebook</Text>

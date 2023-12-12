@@ -4,22 +4,27 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, User } from 'firebase/auth';
 import { RootStackParamList } from '../navigation/navigationTypes';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 const LoginScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user: User | null) => {
       if (user) {
+        
         // User is signed in, navigate to the ProfileScreen
         navigation.navigate('ProfileScreen');
       }
       // If no user, stay on this screen
     });
-
+   
     return unsubscribe; // Unsubscribe on unmount
   }, [navigation]);
 
@@ -27,14 +32,14 @@ const LoginScreen: React.FC = () => {
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in 
-        // You can handle navigation or user state updates here if needed
+        // Signed in
+        const user = userCredential.user;
+        console.log('User signed in: ', user?.email);
       })
       .catch((error) => {
         console.error('Error signing in: ', error);
       });
   };
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -49,13 +54,21 @@ const LoginScreen: React.FC = () => {
           autoCapitalize="none"
           keyboardType="email-address"
         />
-        <TextInput 
-          placeholder="Password" 
-          style={styles.input} 
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-        />
+        <View style={{ flexDirection: 'row', alignItems: 'center', position: 'relative' }}>
+          <TextInput 
+            placeholder="Password" 
+            style={{ ...styles.input, flex: 1 }} 
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry={!passwordVisible}
+          />
+          <TouchableOpacity 
+            onPress={togglePasswordVisibility} 
+            style={{ position: 'absolute', right: 10 }}
+          >
+            <Icon name={passwordVisible ? 'eye-slash' : 'eye'} size={20} color="grey"/>
+          </TouchableOpacity>
+        </View>
       </View>
       <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
         <Text style={styles.loginButtonText}>Login</Text>

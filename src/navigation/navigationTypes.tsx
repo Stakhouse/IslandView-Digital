@@ -1,3 +1,4 @@
+//import ProfileScreen from '../Screens/ProfileScreen';
 type RootStackParamList = {
   HomeScreen: undefined;
   HelpScreen: undefined;
@@ -8,5 +9,6 @@ type RootStackParamList = {
   SignUpScreen: undefined;
   LoginScreen: undefined;
   ProfileScreen: undefined;
+
 };
 export type { RootStackParamList }; // Add this line
