@@ -3,7 +3,19 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
-    "jsx": "react"
+    "jsx": "react",
+    "moduleResolution": "node", // Ensures Node.js-style module resolution
+    "allowSyntheticDefaultImports": true, // Allow default imports from modules with no default export
+    "skipLibCheck": true, // Skip type checking of all declaration files (*.d.ts)
+    "baseUrl": "./", // Base directory to resolve non-relative module names
+    "paths": {
+      "*": ["types/*"] // Support for custom type definitions
+    }
   },
-  "extends": "expo/tsconfig.base"
+  "extends": "expo/tsconfig.base",
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.d.ts"
+  ]
 }

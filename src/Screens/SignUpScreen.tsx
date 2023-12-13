@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { useNavigation } from '@react-navigation/native';
-import { NavigationProp } from '@react-navigation/native';
-import {ProfileStackParamList} from '../navigation/ProfileStackNavigator'; // Replace with actual path
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { ProfileStackParamList } from '../navigation/ProfileStackNavigator'; // Replace with actual path
 
 const SignUpScreen: React.FC = () => {
   const navigation = useNavigation<NavigationProp<ProfileStackParamList>>();
@@ -13,30 +12,30 @@ const SignUpScreen: React.FC = () => {
   const [password, setPassword] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
+  
   const handleSignUp = () => {
+    setIsLoading(true);
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in 
-        const user = userCredential.user;
-        console.log('User signed up: ', user?.email);
         return updateProfile(userCredential.user, {
           displayName: fullName,
         });
       })
       .then(() => {
-        
-        navigation.navigate( 'ProfileScreen', { user: fullName });
+        setIsLoading(false);
+        navigation.navigate('UserProfile', { user: fullName });
       })
       .catch((error) => {
-        console.error('Error signing up: ', error);
+        setIsLoading(false);
+        Alert.alert("Sign Up Error", error.message);
       });
   };
-  
 
   return (
     <View style={styles.container}>

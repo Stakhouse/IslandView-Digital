@@ -1,43 +1,44 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, User } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
 import { RootStackParamList } from '../navigation/navigationTypes';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
 const LoginScreen: React.FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
+
   useEffect(() => {
     const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, (user: User | null) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        
-        // User is signed in, navigate to the ProfileScreen
-        navigation.navigate('ProfileScreen');
+        navigation.navigate('UserProfile');
       }
-      // If no user, stay on this screen
     });
-   
-    return unsubscribe; // Unsubscribe on unmount
+    return unsubscribe;
   }, [navigation]);
 
   const handleLogin = () => {
+    setIsLoading(true);
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log('User signed in: ', user?.email);
+        setIsLoading(false);
+        console.log('User signed in: ', userCredential.user.email);
+        navigation.navigate('UserProfile'); // Add this line
       })
       .catch((error) => {
-        console.error('Error signing in: ', error);
+        setIsLoading(false);
+        Alert.alert("Login Error", error.message);
       });
   };
   return (
@@ -70,8 +71,8 @@ const LoginScreen: React.FC = () => {
           </TouchableOpacity>
         </View>
       </View>
-      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-        <Text style={styles.loginButtonText}>Login</Text>
+      <TouchableOpacity style={styles.loginButton} onPress={handleLogin} disabled={isLoading}>
+        <Text style={styles.loginButtonText}>{isLoading ? 'Logging in...' : 'Login'}</Text>
       </TouchableOpacity>
       <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
       <View style={styles.socialLoginContainer}>
