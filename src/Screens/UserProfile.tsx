@@ -37,23 +37,36 @@ const UserProfile: React.FC = () => {
     });
   };
 
+
   return (
     <View style={styles.container}>
-      <View style={styles.profileCard}>
-        <Image 
-          source={user?.photoURL ? { uri: user.photoURL } :MaleAvatar} 
+      {/* Profile Section */}
+      <View style={styles.profileSection}>
+        <Image
+          source={user?.photoURL ? { uri: user.photoURL } : MaleAvatar}
           style={styles.avatar}
         />
         <Text style={styles.username}>{user?.displayName || 'Username'}</Text>
-        <View style={styles.infoContainer}>
-          <Text style={styles.infoText}>{user?.email || 'User information goes here'}</Text>
-        </View>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={handleSignOut}>
-            <Text style={styles.buttonText}>Sign Out</Text>
-          </TouchableOpacity>
-          {/* Add more buttons with functionality as needed */}
-        </View>
+        <Text style={styles.infoText}>{user?.email || 'User information goes here'}</Text>
+        <TouchableOpacity style={styles.signOutButton} onPress={handleSignOut}>
+          <Text style={styles.buttonText}>Sign Out</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Buttons Section */}
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button} onPress={() => {/* Submit action */}}>
+          <Text style={styles.buttonText}>Submit</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => {/* View live stream action */}}>
+          <Text style={styles.buttonText}>View Live Stream</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => {/* Contact us action */}}>
+          <Text style={styles.buttonText}>Contact Us</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => {/* Help/instructions action */}}>
+          <Text style={styles.buttonText}>Help</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -62,16 +75,17 @@ const UserProfile: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#e9ecef',
+    backgroundColor: '#DFF6FF', // A subtle tropical blue
+    alignItems: 'center', // Center children horizontally
+    justifyContent: 'center', // Center children vertically
   },
-  profileCard: {
+  profileSection: {
     alignItems: 'center',
     backgroundColor: '#ffffff',
     borderRadius: 8,
     padding: 20,
     width: '90%',
+    marginTop: 20, // Position the profile section at the top
   },
   avatar: {
     width: 100,
@@ -85,28 +99,33 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
   },
-  infoContainer: {
-    marginBottom: 10,
-  },
   infoText: {
     fontSize: 16,
   },
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
+    width: '90%', // Match profile section width
+    marginBottom: 20, // Space from the bottom edge
   },
   button: {
-    width: '30%',
-    height: 40,
+    backgroundColor: '#FFC107', // Example tropical color for buttons
     borderRadius: 20,
-    backgroundColor: '#6c757d',
+    height: 40,
+    justifyContent: 'center', // Center text vertically
+    alignItems: 'center', // Center text horizontally
+    marginTop: 10, // Space out buttons
+    width: '100%', // Button width matches the container
   },
   buttonText: {
     color: '#fff',
-    textAlign: 'center',
-    lineHeight: 40, // Align text vertically
+  },
+  signOutButton: {
+    backgroundColor: '#FF6347', // A different color for sign out button
+    borderRadius: 20,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+    width: '100%', // Sign out button width matches the container
   },
 });
-
 export default UserProfile;
