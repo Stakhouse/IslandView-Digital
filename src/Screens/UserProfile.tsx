@@ -56,16 +56,16 @@ const UserProfile: React.FC = () => {
       {/* Buttons Section */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={() => {/* Submit action */}}>
-          <Text style={styles.buttonText}>Submit</Text>
+          <Text style={styles.buttonText}>Submit Ad</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => {/* View live stream action */}}>
-          <Text style={styles.buttonText}>View Live Stream</Text>
+          <Text style={styles.buttonText}>View Live Stream/Dashboard</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => {/* Contact us action */}}>
           <Text style={styles.buttonText}>Contact Us</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => {/* Help/instructions action */}}>
-          <Text style={styles.buttonText}>Help</Text>
+          <Text style={styles.buttonText}>How-to-Info</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -75,6 +75,7 @@ const UserProfile: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 20, // Space out the profile section from the top
     backgroundColor: '#DFF6FF', // A subtle tropical blue
     alignItems: 'center', // Center children horizontally
     justifyContent: 'center', // Center children vertically
@@ -88,14 +89,14 @@ const styles = StyleSheet.create({
     marginTop: 20, // Position the profile section at the top
   },
   avatar: {
-    width: 100,
-    height: 100,
+    width: 200,
+    height: 200,
     borderRadius: 50,
     backgroundColor: '#ced4da',
     marginBottom: 10,
   },
   username: {
-    fontSize: 18,
+    fontSize: 25,
     fontWeight: 'bold',
     marginBottom: 10,
   },
@@ -103,13 +104,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   buttonContainer: {
+    flex: 1, // Take up all available space
     width: '90%', // Match profile section width
-    marginBottom: 20, // Space from the bottom edge
+    //height: '100%', // Match profile section height
+    marginBottom: 20,
+     // Space from the bottom edge
   },
   button: {
     backgroundColor: '#FFC107', // Example tropical color for buttons
     borderRadius: 20,
-    height: 40,
+    height: 60,
     justifyContent: 'center', // Center text vertically
     alignItems: 'center', // Center text horizontally
     marginTop: 10, // Space out buttons
@@ -117,6 +121,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 20,
   },
   signOutButton: {
     backgroundColor: '#FF6347', // A different color for sign out button
