@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Image, Text, TouchableOpacity, Alert } from 'react-native';
 import { getAuth, onAuthStateChanged, signOut, User as FirebaseUser } from 'firebase/auth';
-import { useRoute, RouteProp } from '@react-navigation/native';
-import { ProfileStackParamList } from '../navigation/ProfileStackNavigator';
-import MaleAvatar from '../images/MaleAvatar.jpg'; // Use the correct file extension
 
+// Remove the unused import statement
+// import { ProfileStackParamList } from '../navigation/ProfileStackNavigator';
+import MaleAvatar from '../images/MaleAvatar.jpg';
+import FemaleAvatar from '../images/FemaleAvatar.png';
 
-// Add other file types as needed
-
-// Extend the Firebase User type if needed
 type ExtendedUser = FirebaseUser & {
-  // Add any additional properties if required
+  // ... user properties ...
+  gender?: string;
 };
 
 const UserProfile: React.FC = () => {
   const [user, setUser] = useState<ExtendedUser | null>(null);
-  const route = useRoute<RouteProp<ProfileStackParamList, 'UserProfile'>>();
-  const userName = route.params?.user;
 
   useEffect(() => {
     const auth = getAuth();
@@ -30,6 +27,10 @@ const UserProfile: React.FC = () => {
     return unsubscribe;
   }, []);
 
+  // Determine the avatar based on the user's photoURL
+  const isMaleAvatar = user?.photoURL?.includes('male_avatar');
+  const isFemaleAvatar = user?.photoURL?.includes('female_avatar');
+
   const handleSignOut = () => {
     const auth = getAuth();
     signOut(auth).catch((error) => {
@@ -37,15 +38,15 @@ const UserProfile: React.FC = () => {
     });
   };
 
-
   return (
     <View style={styles.container}>
       {/* Profile Section */}
       <View style={styles.profileSection}>
-        <Image
-          source={user?.photoURL ? { uri: user.photoURL } : MaleAvatar}
-          style={styles.avatar}
-        />
+      <Image 
+        source={user?.photoURL ? { uri: user.photoURL } : 
+          (user?.gender === 'male' ? MaleAvatar : FemaleAvatar)}
+        style={styles.avatar} 
+      />
         <Text style={styles.username}>{user?.displayName || 'Username'}</Text>
         <Text style={styles.infoText}>{user?.email || 'User information goes here'}</Text>
         <TouchableOpacity style={styles.signOutButton} onPress={handleSignOut}>
@@ -53,7 +54,7 @@ const UserProfile: React.FC = () => {
         </TouchableOpacity>
       </View>
 
-      {/* Buttons Section */}
+      {/* Buttons */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={() => {/* Submit action */}}>
           <Text style={styles.buttonText}>Submit Ad</Text>

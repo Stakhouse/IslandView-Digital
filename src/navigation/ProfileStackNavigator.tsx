@@ -3,11 +3,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from '../Screens/LoginScreen';
 import SignUpScreen from '../Screens/SignUpScreen';
 import UserProfile from '../Screens/UserProfile';
+import { ImageSourcePropType } from 'react-native';
 
 export type ProfileStackParamList = {
     LoginScreen: undefined;
     SignUpScreen: undefined;
-    UserProfile: { user?: string }; 
+    UserProfile: { user?: string; avatar?: ImageSourcePropType };
 };
 
 const ProfileStack = createStackNavigator<ProfileStackParamList>();
