@@ -17,8 +17,6 @@ import {
 import Icon from "react-native-vector-icons/FontAwesome";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { ProfileStackParamList } from "../navigation/ProfileStackNavigator";
-import MaleAvatar from "../images/MaleAvatar.jpg"; // Use the correct file extension
-import FemaleAvatar from "../images/FemaleAvatar.png"; // Use the correct file extension
 
 const SignUpScreen: React.FC = () => {
   const navigation = useNavigation<NavigationProp<ProfileStackParamList>>();
@@ -41,10 +39,6 @@ const SignUpScreen: React.FC = () => {
   const MaleAvatar = 'src/images/MaleAvatar.jpg'; 
 const FemaleAvatar = 'src/images/FemaleAvatar.png'; 
 
-  const UserProfile = () => {
-    const [avatar, setAvatar] = useState(null);
-  };
-  const selectedAvatar = gender === 'male' ? MaleAvatar : FemaleAvatar;
   // Function to validate email format
   const validateEmail = (email: string) => {
     const re = /\S+@\S+\.\S+/;
@@ -120,9 +114,6 @@ const FemaleAvatar = 'src/images/FemaleAvatar.png';
       });
   };
 
-  function setAvatar(MaleAvatar: any) {
-    throw new Error("Function not implemented.");
-  }
 
   return (
     <View style={styles.container}>
