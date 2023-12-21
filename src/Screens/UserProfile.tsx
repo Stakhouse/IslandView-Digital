@@ -1,54 +1,72 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Image, Text, TouchableOpacity, Alert } from 'react-native';
 import { getAuth, onAuthStateChanged, signOut, User as FirebaseUser } from 'firebase/auth';
-
-// Remove the unused import statement
-// import { ProfileStackParamList } from '../navigation/ProfileStackNavigator';
-import MaleAvatar from '../images/MaleAvatar.jpg';
-import FemaleAvatar from '../images/FemaleAvatar.png';
+import DefaultAvatar from '../images/DefaultAvatar.png';
+import { useNavigation } from '@react-navigation/native';
+import storage from '@react-native-firebase/storage';
+import firestore from '@react-native-firebase/firestore';
 
 type ExtendedUser = FirebaseUser & {
-  // ... user properties ...
   gender?: string;
 };
-
 const UserProfile: React.FC = () => {
+  const navigation = useNavigation();
+  const [userImage, setUserImage] = useState(DefaultAvatar); // State for user image
   const [user, setUser] = useState<ExtendedUser | null>(null);
 
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        setUser(currentUser as ExtendedUser);
+        setUser(currentUser); // Directly set currentUser without type casting
+        // Fetch additional user data from Firestore
+        firestore()
+          .collection('users')
+          .doc(currentUser.uid)
+          .get()
+          .then((documentSnapshot) => {
+            if (documentSnapshot.exists) {
+              const userData = documentSnapshot.data();
+              setUserImage(userData?.profilePicture || DefaultAvatar);
+            }
+          });
       } else {
         setUser(null);
+        setUserImage(DefaultAvatar);
       }
     });
     return unsubscribe;
   }, []);
+  
 
-  // Determine the avatar based on the user's photoURL
-  const isMaleAvatar = user?.photoURL?.includes('male_avatar');
-  const isFemaleAvatar = user?.photoURL?.includes('female_avatar');
+  const pickImageAndUpload = async () => {
+    // Image picking and upload logic
+    // ... (similar to the function provided in the previous response) ...
+  };
 
+  
   const handleSignOut = () => {
     const auth = getAuth();
-    signOut(auth).catch((error) => {
-      Alert.alert('Error', 'Failed to sign out: ' + error.message);
-    });
+    signOut(auth)
+      .then(() => {
+        // Navigate to the login screen after successful sign-out
+        navigation.navigate('LoginScreen' as never);
+      })
+      .catch((error) => {
+        Alert.alert('Error', 'Failed to sign out: ' + error.message);
+      });
   };
 
   return (
     <View style={styles.container}>
-      {/* Profile Section */}
       <View style={styles.profileSection}>
-      <Image 
-        source={user?.photoURL ? { uri: user.photoURL } : 
-          (user?.gender === 'male' ? MaleAvatar : FemaleAvatar)}
-        style={styles.avatar} 
-      />
+        <Image source={userImage ? { uri: userImage } : DefaultAvatar} style={styles.avatar} />
         <Text style={styles.username}>{user?.displayName || 'Username'}</Text>
-        <Text style={styles.infoText}>{user?.email || 'User information goes here'}</Text>
+        
+        <TouchableOpacity style={styles.button} onPress={pickImageAndUpload}>
+          <Text style={styles.buttonText}>Upload Image</Text>
+        </TouchableOpacity>
+        
         <TouchableOpacity style={styles.signOutButton} onPress={handleSignOut}>
           <Text style={styles.buttonText}>Sign Out</Text>
         </TouchableOpacity>

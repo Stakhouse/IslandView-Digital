@@ -17,6 +17,7 @@ import {
 import Icon from "react-native-vector-icons/FontAwesome";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { ProfileStackParamList } from "../navigation/ProfileStackNavigator";
+import DefaultAvatar from '../images/DefaultAvatar.png'; // Import the default avatar image
 
 const SignUpScreen: React.FC = () => {
   const navigation = useNavigation<NavigationProp<ProfileStackParamList>>();
@@ -26,8 +27,8 @@ const SignUpScreen: React.FC = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [gender, setGender] = useState(""); // New state for gender selection
-
+  
+  const [gender, setGender] = useState(""); // Keep this if gender info is still needed
   // New state for form validation errors
   const [errors, setErrors] = useState({
     fullNameError: "",
@@ -36,9 +37,7 @@ const SignUpScreen: React.FC = () => {
     phoneNumberError: "",
     genderError: "", // New error state for gender
   });
-  const MaleAvatar = 'src/images/MaleAvatar.jpg'; 
-const FemaleAvatar = 'src/images/FemaleAvatar.png'; 
-
+ 
   // Function to validate email format
   const validateEmail = (email: string) => {
     const re = /\S+@\S+\.\S+/;
@@ -96,12 +95,12 @@ const FemaleAvatar = 'src/images/FemaleAvatar.png';
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Assign avatar based on gender selection
-      const selectedAvatar = gender === 'male' ? MaleAvatar : FemaleAvatar;
+      
 
       // Update the user profile in Firebase
       return updateProfile(userCredential.user, {
         displayName: fullName,
-        photoURL: selectedAvatar, // Store the avatar URL or reference
+        photoURL: DefaultAvatar, // Store the avatar URL or reference
       });
     })
       .then(() => {
