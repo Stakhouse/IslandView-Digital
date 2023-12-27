@@ -1,77 +1,81 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Image, Text, TouchableOpacity, Alert } from 'react-native';
-import { getAuth, onAuthStateChanged, signOut, User as FirebaseUser } from 'firebase/auth';
+import { User, UserCredential, getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import DefaultAvatar from '../images/DefaultAvatar.png';
 import { useNavigation } from '@react-navigation/native';
-import storage from '@react-native-firebase/storage';
-import firestore from '@react-native-firebase/firestore';
+import * as ImagePicker from 'expo-image-picker';
+import * as SecureStore from 'expo-secure-store';
 
-type ExtendedUser = FirebaseUser & {
-  gender?: string;
-};
+
+
 const UserProfile: React.FC = () => {
   const navigation = useNavigation();
-  const [userImage, setUserImage] = useState(DefaultAvatar); // State for user image
-  const [user, setUser] = useState<ExtendedUser | null>(null);
+  const auth = getAuth();
+  const firestore = getFirestore();
+  const [userImage, setUserImage] = useState(DefaultAvatar);
+  const [user, setUser] = useState<User | null>(null); 
 
+ 
   useEffect(() => {
-    const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
-        setUser(currentUser); // Directly set currentUser without type casting
-        // Fetch additional user data from Firestore
-        firestore()
-          .collection('users')
-          .doc(currentUser.uid)
-          .get()
-          .then((documentSnapshot) => {
-            if (documentSnapshot.exists) {
-              const userData = documentSnapshot.data();
-              setUserImage(userData?.profilePicture || DefaultAvatar);
-            }
-          });
+        setUser(currentUser); // currentUser is of type User
+        const userDocRef = doc(firestore, 'users', currentUser.uid);
+        const docSnapshot = await getDoc(userDocRef);
+
+        if (docSnapshot.exists()) {
+          const userData = docSnapshot.data();
+          setUserImage(userData?.profilePicture || DefaultAvatar);
+        }
       } else {
         setUser(null);
         setUserImage(DefaultAvatar);
       }
     });
-    return unsubscribe;
-  }, []);
-  
+
+    return unsubscribe; // Cleanup function
+  }, [auth, firestore]);
 
   const pickImageAndUpload = async () => {
-    // Image picking and upload logic
-    // ... (similar to the function provided in the previous response) ...
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      // Implement the logic to handle the selected image
+      // Upload to Firebase Storage and update Firestore
+    }
   };
 
-  
-  const handleSignOut = () => {
-    const auth = getAuth();
-    signOut(auth)
-      .then(() => {
-        // Navigate to the login screen after successful sign-out
-        navigation.navigate('LoginScreen' as never);
-      })
-      .catch((error) => {
-        Alert.alert('Error', 'Failed to sign out: ' + error.message);
-      });
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      navigation.navigate('LoginScreen' as never);
+      await SecureStore.deleteItemAsync('firebaseAuthToken');
+    } catch (error) {
+      Alert.alert('Error', 'Failed to sign out: ' + (error as Error).message);
+    }
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.profileSection}>
-        <Image source={userImage ? { uri: userImage } : DefaultAvatar} style={styles.avatar} />
-        <Text style={styles.username}>{user?.displayName || 'Username'}</Text>
-        
+      <Image source={require('../images/DefaultAvatar.png')} style={styles.avatar} />
+
+        <Text style={styles.username}>{user && user.displayName || 'Username'}</Text>
+
         <TouchableOpacity style={styles.button} onPress={pickImageAndUpload}>
           <Text style={styles.buttonText}>Upload Image</Text>
         </TouchableOpacity>
-        
+
         <TouchableOpacity style={styles.signOutButton} onPress={handleSignOut}>
           <Text style={styles.buttonText}>Sign Out</Text>
         </TouchableOpacity>
       </View>
-
       {/* Buttons */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={() => {/* Submit action */}}>
@@ -154,3 +158,4 @@ const styles = StyleSheet.create({
   },
 });
 export default UserProfile;
+
