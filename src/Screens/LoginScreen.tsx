@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { RootStackParamList } from '../navigation/navigationTypes';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useAuth } from '../components/AuthContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { auth } from '../components/firebaseConfig';
 
 const LoginScreen: React.FC = () => {
+  const { setIsUserAuthenticated } = useAuth(); // Use the setter from AuthContext
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,30 +21,26 @@ const LoginScreen: React.FC = () => {
     setPasswordVisible(!passwordVisible);
   };
 
-  useEffect(() => {
-    const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        navigation.navigate('UserProfile');
-      }
-    });
-    return unsubscribe;
-  }, [navigation]);
-
   const handleLogin = () => {
     setIsLoading(true);
-    const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+        const userData = {
+          uid: userCredential.user.uid,
+          email: userCredential.user.email,
+          // other user data you want to save
+        };
+        AsyncStorage.setItem('user', JSON.stringify(userData));
+        setIsUserAuthenticated(true);
         setIsLoading(false);
-        console.log('User signed in: ', userCredential.user.email);
-        navigation.navigate('UserProfile'); // Add this line
+        navigation.navigate('UserProfile');
       })
       .catch((error) => {
         setIsLoading(false);
         Alert.alert("Login Error", error.message);
       });
   };
+  
   return (
     <View style={styles.container}>
       <View style={styles.header}>

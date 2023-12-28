@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   View,
   Text,
@@ -17,9 +18,11 @@ import {
 import Icon from "react-native-vector-icons/FontAwesome";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { ProfileStackParamList } from "../navigation/ProfileStackNavigator";
-import DefaultAvatar from '../images/DefaultAvatar.png'; // Import the default avatar image
+import { useAuth } from "../components/AuthContext";
+import { auth } from "../components/firebaseConfig";
 
 const SignUpScreen: React.FC = () => {
+  const { setIsUserAuthenticated } = useAuth();
   const navigation = useNavigation<NavigationProp<ProfileStackParamList>>();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -27,7 +30,7 @@ const SignUpScreen: React.FC = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const [gender, setGender] = useState(""); // Keep this if gender info is still needed
   // New state for form validation errors
   const [errors, setErrors] = useState({
@@ -37,7 +40,7 @@ const SignUpScreen: React.FC = () => {
     phoneNumberError: "",
     genderError: "", // New error state for gender
   });
- 
+
   // Function to validate email format
   const validateEmail = (email: string) => {
     const re = /\S+@\S+\.\S+/;
@@ -83,36 +86,34 @@ const SignUpScreen: React.FC = () => {
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
- 
+
   // Modified: handleSignUp now includes form validation and gender
   const handleSignUp = () => {
     if (!validateForm()) {
       return;
     }
-
+  
     setIsLoading(true);
-    const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Assign avatar based on gender selection
-      
-
-      // Update the user profile in Firebase
-      return updateProfile(userCredential.user, {
-        displayName: fullName,
-        photoURL: DefaultAvatar, // Store the avatar URL or reference
-      });
-    })
-      .then(() => {
+      .then((userCredential) => {
+        // Optionally update the user profile here
+  
+        const userData = {
+          uid: userCredential.user.uid,
+          email: userCredential.user.email,
+          // additional user data
+        };
+        AsyncStorage.setItem('user', JSON.stringify(userData));
+        setIsUserAuthenticated(true);
         setIsLoading(false);
-        navigation.navigate("UserProfile", { user: fullName });
+        navigation.navigate({ key: 'UserProfile' });
       })
       .catch((error) => {
         setIsLoading(false);
         Alert.alert("Sign Up Error", error.message);
       });
   };
-
+  
 
   return (
     <View style={styles.container}>
@@ -122,30 +123,30 @@ const SignUpScreen: React.FC = () => {
 
       {/* Gender Selection */}
       <View style={styles.genderContainer}>
-    <TouchableOpacity
-      style={[
-        styles.genderButton,
-        gender === "male" && styles.selectedGender,
-      ]}
-      onPress={() => {
-        setGender("male");
-      }}>
-      <Text style={styles.genderText}>Male</Text>
-    </TouchableOpacity>
-    <TouchableOpacity
-      style={[
-        styles.genderButton,
-        gender === "female" && styles.selectedGender,
-      ]}
-      onPress={() => {
-        setGender("female");
-      }}>
-      <Text style={styles.genderText}>Female</Text>
-    </TouchableOpacity>
-  </View>
-    {errors.genderError ? (
-      <Text style={styles.errorText}>{errors.genderError}</Text>
-    ) : null}
+        <TouchableOpacity
+          style={[
+            styles.genderButton,
+            gender === "male" && styles.selectedGender,
+          ]}
+          onPress={() => {
+            setGender("male");
+          }}>
+          <Text style={styles.genderText}>Male</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            styles.genderButton,
+            gender === "female" && styles.selectedGender,
+          ]}
+          onPress={() => {
+            setGender("female");
+          }}>
+          <Text style={styles.genderText}>Female</Text>
+        </TouchableOpacity>
+      </View>
+      {errors.genderError ? (
+        <Text style={styles.errorText}>{errors.genderError}</Text>
+      ) : null}
 
       <TextInput
         placeholder="Enter Full Name"
@@ -216,71 +217,69 @@ const SignUpScreen: React.FC = () => {
         ) : (
           <Text style={styles.saveButtonText}>Save</Text>
         )}
-        </TouchableOpacity>
-    
-      
-      <ScrollView>
-    <TouchableOpacity>
-      <Text style={styles.returnLoginText}>
-        {'Have an account? '}
-        <Text
-          style={{ fontWeight: "bold", color: "red", fontSize: 25 }}
-          onPress={() => navigation.goBack()}>
-         {' Login or'}
-        </Text>
-      </Text>
-    </TouchableOpacity>
-      <TouchableOpacity style={styles.socialButton}>
-        <Icon
-          name="facebook"
-          size={24}
-          color="#000"
-          style={{ marginRight: 10 }}
-        />
-        <Text>Sign Up with Facebook</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.socialButton}>
-        <Icon
-          name="twitter"
-          size={24}
-          color="#000"
-          style={{ marginRight: 10 }}
-        />
-        <Text>Sign Up with Twitter</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.socialButton}>
-        <Icon
-          name="google"
-          size={24}
-          color="#000"
-          style={{ marginRight: 10 }}
-        />
-        <Text>Sign Up with Google</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.socialButton}>
-        <Icon
-          name="whatsapp"
-          size={24}
-          color="#000"
-          style={{ marginRight: 10 }}
-        />
-        <Text>Sign Up with WhatsApp</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Text
-          style={{
-            textAlign: "center",
-            fontWeight: "bold",
-            color: "red",
-            fontSize: 25,
-          }}>
-          Go Back
-        </Text>
-      </TouchableOpacity>
+      <ScrollView>
+        <TouchableOpacity>
+          <Text style={styles.returnLoginText}>
+            {"Have an account? "}
+            <Text
+              style={{ fontWeight: "bold", color: "red", fontSize: 25 }}
+              onPress={() => navigation.goBack()}>
+              {" Login or"}
+            </Text>
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.socialButton}>
+          <Icon
+            name="facebook"
+            size={24}
+            color="#000"
+            style={{ marginRight: 10 }}
+          />
+          <Text>Sign Up with Facebook</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.socialButton}>
+          <Icon
+            name="twitter"
+            size={24}
+            color="#000"
+            style={{ marginRight: 10 }}
+          />
+          <Text>Sign Up with Twitter</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.socialButton}>
+          <Icon
+            name="google"
+            size={24}
+            color="#000"
+            style={{ marginRight: 10 }}
+          />
+          <Text>Sign Up with Google</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.socialButton}>
+          <Icon
+            name="whatsapp"
+            size={24}
+            color="#000"
+            style={{ marginRight: 10 }}
+          />
+          <Text>Sign Up with WhatsApp</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Text
+            style={{
+              textAlign: "center",
+              fontWeight: "bold",
+              color: "red",
+              fontSize: 25,
+            }}>
+            Go Back
+          </Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
-    
   );
 };
 

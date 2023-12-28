@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import { getAuth, setPersistence, inMemoryPersistence } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
+
 
 // Firebase configuration
 const firebaseConfig = {
@@ -15,10 +16,12 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Just get the auth instance without specifying persistence.
+// Initialize Firebase Auth with AsyncStorage for persistence
 const auth = getAuth(app);
+setPersistence(auth, inMemoryPersistence);
 
-// Similarly, get the Firestore instance.
+
+// Get the Firestore instance
 const db = getFirestore(app);
 
-export { auth, db }
+export { auth, db };

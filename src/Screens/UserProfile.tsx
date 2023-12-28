@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Image, Text, TouchableOpacity, Alert } from 'react-native';
-import { User, UserCredential, getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { User, getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import DefaultAvatar from '../images/DefaultAvatar.png';
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import * as SecureStore from 'expo-secure-store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -54,17 +55,19 @@ const UserProfile: React.FC = () => {
   const handleSignOut = async () => {
     try {
       await signOut(auth);
+      await AsyncStorage.removeItem('user'); // Remove user data from AsyncStorage
       navigation.navigate('LoginScreen' as never);
-      await SecureStore.deleteItemAsync('firebaseAuthToken');
     } catch (error) {
       Alert.alert('Error', 'Failed to sign out: ' + (error as Error).message);
     }
   };
+  
 
   return (
     <View style={styles.container}>
       <View style={styles.profileSection}>
-      <Image source={require('../images/DefaultAvatar.png')} style={styles.avatar} />
+      <Image source={userImage} style={styles.avatar} />
+
 
         <Text style={styles.username}>{user && user.displayName || 'Username'}</Text>
 
