@@ -15,9 +15,9 @@ const UserProfile: React.FC = () => {
   const auth = getAuth();
   const firestore = getFirestore();
   const [userImage, setUserImage] = useState(DefaultAvatar);
-  const [user, setUser] = useState<User | null>(null); 
+  const [user, setUser] = useState<User | null>(null);
 
- 
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
@@ -61,12 +61,12 @@ const UserProfile: React.FC = () => {
       Alert.alert('Error', 'Failed to sign out: ' + (error as Error).message);
     }
   };
-  
+
 
   return (
     <View style={styles.container}>
       <View style={styles.profileSection}>
-      <Image source={userImage} style={styles.avatar} />
+        <Image source={userImage} style={styles.avatar} />
 
 
         <Text style={styles.username}>{user && user.displayName || 'Username'}</Text>
@@ -81,16 +81,16 @@ const UserProfile: React.FC = () => {
       </View>
       {/* Buttons */}
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => {/* Submit action */}}>
+        <TouchableOpacity style={styles.button} onPress={() => {/* Submit action */ }}>
           <Text style={styles.buttonText}>Submit Ad</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => {/* View live stream action */}}>
+        <TouchableOpacity style={styles.button} onPress={() => {/* View live stream action */ }}>
           <Text style={styles.buttonText}>View Live Stream/Dashboard</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => {/* Contact us action */}}>
+        <TouchableOpacity style={styles.button} onPress={() => {/* Contact us action */ }}>
           <Text style={styles.buttonText}>Contact Us</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => {/* Help/instructions action */}}>
+        <TouchableOpacity style={styles.button} onPress={() => {/* Help/instructions action */ }}>
           <Text style={styles.buttonText}>How-to-Info</Text>
         </TouchableOpacity>
       </View>
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     width: '90%', // Match profile section width
     //height: '100%', // Match profile section height
     marginBottom: 20,
-     // Space from the bottom edge
+    // Space from the bottom edge
   },
   button: {
     backgroundColor: '#FFC107', // Example tropical color for buttons
